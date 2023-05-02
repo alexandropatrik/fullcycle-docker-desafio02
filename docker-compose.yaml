@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+ 
+  proxy:
+    build: nginx
+    container_name: proxy_desafio
+    networks:
+      - desafio-docker-nginx-node
+    tty: true
+    ports:
+      - "8080:8080"
+
+  app:
+    build: 
+      context: app
+    container_name: node_desafio
+    entrypoint: wait-for db_desafio:3306 -t 10 -- node index.js
+    networks:
+      - desafio-docker-nginx-node
+    volumes:
+      - ./app:/usr/src/app
+    tty: true
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db_desafio
+
+  db_desafio:
+    image: mysql:5.7
+    command: --innodb-use-native-aio=0
+    container_name: db_desafio
+    restart: always
+    tty: true
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=desafio
+      - MYSQL_ROOT_PASSWORD=root
+    networks:
+      - desafio-docker-nginx-node
+
+networks:
+  desafio-docker-nginx-node:
+    driver: bridge
