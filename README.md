@@ -7,3 +7,7 @@ Possui um servidor nginx expondo a porta 8080 que atua como proxy reverso para f
 # Para executar
 
 docker-compose up -d
+
+# Para acessar
+
+Acesse http://localhost:8080 em qualquer navegador.
