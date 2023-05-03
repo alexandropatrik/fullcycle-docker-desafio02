@@ -15,7 +15,7 @@ services:
     build: 
       context: app
     container_name: node_desafio
-    entrypoint: wait-for db_desafio:3306 -t 10 -- node index.js
+    entrypoint: wait-for db_desafio:3306 -t 30 -- node index.js
     networks:
       - desafio-docker-nginx-node
     tty: true
