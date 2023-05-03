@@ -18,8 +18,6 @@ services:
     entrypoint: wait-for db_desafio:3306 -t 10 -- node index.js
     networks:
       - desafio-docker-nginx-node
-    volumes:
-      - ./app:/usr/src/app
     tty: true
     ports:
       - "3000:3000"
